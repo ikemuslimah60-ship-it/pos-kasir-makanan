@@ -32,15 +32,16 @@
         /* Tampilan Struk Pembelian */
         #struk-area { display: none; background: #fff; padding: 20px; border: 1px dashed #333; width: 300px; margin-top: 20px; font-family: 'Courier New', Courier, monospace; }
         #struk-area h3 { text-align: center; margin-bottom: 5px; }
-        #struk-area p { margin: 3px 0; font-size: 13px; }
+        #struk-area p { text-align: center; margin: 3px 0; font-size: 13px; }
         .struk-divider { border-top: 1px dashed #333; margin: 8px 0; }
         .struk-row { display: flex; justify-content: space-between; font-size: 13px; }
 
-        /* Sembunyikan elemen non-struk saat dicetak */
+        /* Format khusus saat dicetak */
         @media print {
             body * { visibility: hidden; }
             #struk-area, #struk-area * { visibility: visible; }
             #struk-area { display: block !important; position: absolute; left: 0; top: 0; width: 100%; border: none; }
+            .btn-cetak { display: none; }
         }
     </style>
 </head>
@@ -49,25 +50,25 @@
     <h1>🍔 Aplikasi Kasir Makanan</h1>
 
     <div class="container">
-        <!-- Form Input Pesanan -->
+        <!-- Form Input Bebas Menu & Harga -->
         <div class="card">
             <h2>1. Input Pesanan</h2>
             <div class="form-group">
                 <label>Nama Makanan / Minuman:</label>
-                <input type="text" id="namaMenu" placeholder="Contoh: Nasi Goreng Extra Pedas">
+                <input type="text" id="namaMenu" placeholder="Ketik nama menu apa saja...">
             </div>
             <div class="form-group">
                 <label>Harga Satuan (Rp):</label>
-                <input type="number" id="hargaMenu" placeholder="Contoh: 15000">
+                <input type="number" id="hargaMenu" placeholder="Ketik harganya...">
             </div>
             <div class="form-group">
                 <label>Jumlah (Qty):</label>
-                <input type="number" id="jumlahMenu" placeholder="Contoh: 2" value="1">
+                <input type="number" id="jumlahMenu" placeholder="Jumlah porsi" value="1">
             </div>
             <button onclick="tambahPesanan()">+ Tambahkan ke Pesanan</button>
         </div>
 
-        <!-- Daftar Pesanan & Pembayaran -->
+        <!-- Detail Pesanan & Uang Bayar / Kembalian -->
         <div class="card">
             <h2>2. Detail Pesanan & Pembayaran</h2>
             <table>
@@ -80,7 +81,7 @@
                     </tr>
                 </thead>
                 <tbody id="tabelPesanan">
-                    <!-- Item akan muncul di sini -->
+                    <!-- Pesanan yang dimasukkan akan tampil di sini -->
                 </tbody>
             </table>
 
@@ -93,7 +94,7 @@
 
             <div class="form-group" style="margin-top: 15px;">
                 <label>Nominal Uang Pembayaran (Rp):</label>
-                <input type="number" id="uangBayar" placeholder="Contoh: 50000" oninput="hitungKembalian()">
+                <input type="number" id="uangBayar" placeholder="Input uang dari pembeli..." oninput="hitungKembalian()">
             </div>
 
             <div class="summary-box">
@@ -108,12 +109,12 @@
         </div>
     </div>
 
-    <!-- Area Struk Pembayaran -->
+    <!-- Area Struk Cetak -->
     <div id="struk-area">
         <h3>WARUNG MAKANAN SEJATI</h3>
-        <p style="text-align: center;">Jl. Raya Kasir No. 123</p>
+        <p>Jl. Raya Kasir No. 123</p>
         <div class="struk-divider"></div>
-        <p id="strukTanggal"></p>
+        <p id="strukTanggal" style="text-align: left;"></p>
         <div class="struk-divider"></div>
         <div id="strukItems"></div>
         <div class="struk-divider"></div>
@@ -121,7 +122,7 @@
         <div class="struk-row"><span>Bayar:</span><span id="strukBayar">Rp 0</span></div>
         <div class="struk-row"><span>Kembali:</span><span id="strukKembali">Rp 0</span></div>
         <div class="struk-divider"></div>
-        <p style="text-align: center; margin-top: 10px;">-- Terima Kasih --</p>
+        <p style="margin-top: 10px;">-- Terima Kasih --</p>
         <button class="btn-cetak" onclick="window.print()">🖨️ Cetak Struk</button>
     </div>
 
@@ -135,7 +136,7 @@
             const qty = parseInt(document.getElementById('jumlahMenu').value);
 
             if (!nama || isNaN(harga) || isNaN(qty) || qty <= 0) {
-                alert('Silakan isi nama menu, harga, dan jumlah yang valid!');
+                alert('Silakan ketik nama menu, harga, dan jumlah yang valid!');
                 return;
             }
 
@@ -195,7 +196,6 @@
                 return;
             }
 
-            // Buat Struk
             const strukArea = document.getElementById('struk-area');
             const strukItems = document.getElementById('strukItems');
             strukItems.innerHTML = '';
@@ -228,4 +228,4 @@
     </script>
 
 </body>
-</html>
+</html>            
