@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kasir Makanan Interaktif</title>
+    <title>Aplikasi Kasir Cafe IPM</title>
     <style>
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
@@ -53,11 +53,11 @@
 </head>
 <body>
 
-    <h1>🍔 Aplikasi Kasir Makanan</h1>
+    <h1>☕ Aplikasi Kasir Cafe IPM</h1>
 
     <div class="container">
         <div class="card">
-            <h2>1. Pilih Menu Makanan</h2>
+            <h2>1. Pilih Menu Makanan & Minuman</h2>
             <label>Klik Menu Siap Pakai:</label>
             <div class="menu-grid">
                 <div class="btn-menu" onclick="pilihMenu('Nasi Goreng', 15000)">
@@ -87,11 +87,11 @@
             <h2>Atau Ketik Menu Manual:</h2>
             <div class="form-group">
                 <label>Nama Makanan / Minuman:</label>
-                <input type="text" id="namaMenu" placeholder="Contoh: Bakso Mercon">
+                <input type="text" id="namaMenu" placeholder="Contoh: Kopi Hitam">
             </div>
             <div class="form-group">
                 <label>Harga Satuan (Rp):</label>
-                <input type="text" id="hargaMenu" placeholder="Contoh: 15000 (tanpa titik)">
+                <input type="text" id="hargaMenu" placeholder="Contoh: 10000">
             </div>
             <div class="form-group">
                 <label>Jumlah (Qty):</label>
@@ -123,7 +123,7 @@
 
             <div class="form-group" style="margin-top: 15px;">
                 <label>Nominal Uang Pembayaran (Rp):</label>
-                <input type="text" id="uangBayar" placeholder="Contoh: 50000 (tanpa titik)" oninput="hitungKembalian()">
+                <input type="text" id="uangBayar" placeholder="Contoh: 50000" oninput="hitungKembalian()">
             </div>
 
             <div class="summary-box">
@@ -138,9 +138,10 @@
         </div>
     </div>
 
+    <!-- Struk Pembayaran -->
     <div id="struk-area">
-        <h3>WARUNG MAKANAN SEJATI</h3>
-        <p>Jl. Raya Kasir No. 123</p>
+        <h3>CAFE IPM</h3>
+        <p>Jl. Kec. Padang Kab. Lumajang, Jawa Timur</p>
         <div class="struk-divider"></div>
         <p id="strukTanggal" style="text-align: left;"></p>
         <div class="struk-divider"></div>
