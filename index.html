@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kasir Makanan Interaktif & Struk</title>
+    <title>Aplikasi Kasir Makanan Interaktif</title>
     <style>
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
         h1, h2, h3 { color: #2c3e50; }
         .container { display: flex; gap: 20px; flex-wrap: wrap; }
         .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex: 1; min-width: 320px; }
+        
+        /* Grid Tombol Menu */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .btn-menu { background: #ffffff; border: 2px solid #28a745; color: #28a745; padding: 12px 8px; border-radius: 8px; cursor: pointer; text-align: center; font-weight: bold; transition: all 0.2s; }
+        .btn-menu:hover { background: #28a745; color: white; transform: translateY(-2px); }
+        .btn-menu span { display: block; font-size: 0.85em; color: #666; font-weight: normal; margin-top: 4px; }
+        .btn-menu:hover span { color: #f0f0f0; }
+
         .form-group { margin-bottom: 12px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
         input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        button { background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; font-size: 15px; margin-top: 5px; }
-        button:hover { background: #218838; }
-        .btn-bayar { background: #007bff; }
-        .btn-bayar:hover { background: #0056b3; }
-        .btn-cetak { background: #17a2b8; margin-top: 10px; }
-        .btn-cetak:hover { background: #138496; }
-        .btn-reset { background: #dc3545; margin-top: 10px; }
-        .btn-reset:hover { background: #c82333; }
+        
+        button.action-btn { background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; font-size: 15px; margin-top: 5px; }
+        button.action-btn:hover { background: #218838; }
+        .btn-bayar { background: #007bff !important; }
+        .btn-bayar:hover { background: #0056b3 !important; }
+        .btn-cetak { background: #17a2b8 !important; margin-top: 10px; }
+        .btn-reset { background: #dc3545 !important; margin-top: 10px; }
+        
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
+        
         .summary-box { margin-top: 15px; background: #eef2f5; padding: 12px; border-radius: 6px; }
         .summary-item { display: flex; justify-content: space-between; font-size: 1.1em; font-weight: bold; margin: 5px 0; }
         .text-kembalian { color: #28a745; }
         .text-kurang { color: #dc3545; }
 
-        /* Tampilan Struk Pembelian */
+        /* Struk Area */
         #struk-area { display: none; background: #fff; padding: 20px; border: 1px dashed #333; width: 300px; margin-top: 20px; font-family: 'Courier New', Courier, monospace; }
         #struk-area h3 { text-align: center; margin-bottom: 5px; }
         #struk-area p { text-align: center; margin: 3px 0; font-size: 13px; }
         .struk-divider { border-top: 1px dashed #333; margin: 8px 0; }
         .struk-row { display: flex; justify-content: space-between; font-size: 13px; }
 
-        /* Format khusus saat dicetak */
         @media print {
             body * { visibility: hidden; }
             #struk-area, #struk-area * { visibility: visible; }
@@ -50,25 +58,54 @@
     <h1>🍔 Aplikasi Kasir Makanan</h1>
 
     <div class="container">
-        <!-- Form Input Bebas Menu & Harga -->
+        <!-- Pilihan Menu Siap Klik & Form Custom Input -->
         <div class="card">
-            <h2>1. Input Pesanan</h2>
+            <h2>1. Pilih Menu Makanan</h2>
+            
+            <!-- Daftar Menu yang Tinggal Klik -->
+            <label>Klik Menu Siap Pakai:</label>
+            <div class="menu-grid">
+                <div class="btn-menu" onclick="pilihMenu('Nasi Goreng', 15000)">
+                    Nasi Goreng
+                    <span>Rp 15.000</span>
+                </div>
+                <div class="btn-menu" onclick="pilihMenu('Mie Goreng', 12000)">
+                    Mie Goreng
+                    <span>Rp 12.000</span>
+                </div>
+                <div class="btn-menu" onclick="pilihMenu('Ayam Geprek', 18000)">
+                    Ayam Geprek
+                    <span>Rp 18.000</span>
+                </div>
+                <div class="btn-menu" onclick="pilihMenu('Es Teh Manis', 5000)">
+                    Es Teh Manis
+                    <span>Rp 5.000</span>
+                </div>
+                <div class="btn-menu" onclick="pilihMenu('Es Jeruk', 6000)">
+                    Es Jeruk
+                    <span>Rp 6.000</span>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+            <h2>Atau Ketik Menu Manual:</h2>
             <div class="form-group">
                 <label>Nama Makanan / Minuman:</label>
-                <input type="text" id="namaMenu" placeholder="Ketik nama menu apa saja...">
+                <input type="text" id="namaMenu" placeholder="Contoh: Bakso Mercon">
             </div>
             <div class="form-group">
                 <label>Harga Satuan (Rp):</label>
-                <input type="number" id="hargaMenu" placeholder="Ketik harganya...">
+                <input type="number" id="hargaMenu" placeholder="Contoh: 15000">
             </div>
             <div class="form-group">
                 <label>Jumlah (Qty):</label>
-                <input type="number" id="jumlahMenu" placeholder="Jumlah porsi" value="1">
+                <input type="number" id="jumlahMenu" value="1">
             </div>
-            <button onclick="tambahPesanan()">+ Tambahkan ke Pesanan</button>
+            <button class="action-btn" onclick="tambahManual()">+ Tambah ke Pesanan</button>
         </div>
 
-        <!-- Detail Pesanan & Uang Bayar / Kembalian -->
+        <!-- Detail Pesanan & Pembayaran -->
         <div class="card">
             <h2>2. Detail Pesanan & Pembayaran</h2>
             <table>
@@ -80,9 +117,7 @@
                         <th>Subtotal</th>
                     </tr>
                 </thead>
-                <tbody id="tabelPesanan">
-                    <!-- Pesanan yang dimasukkan akan tampil di sini -->
-                </tbody>
+                <tbody id="tabelPesanan"></tbody>
             </table>
 
             <div class="summary-box">
@@ -94,7 +129,7 @@
 
             <div class="form-group" style="margin-top: 15px;">
                 <label>Nominal Uang Pembayaran (Rp):</label>
-                <input type="number" id="uangBayar" placeholder="Input uang dari pembeli..." oninput="hitungKembalian()">
+                <input type="number" id="uangBayar" placeholder="Input uang pembeli..." oninput="hitungKembalian()">
             </div>
 
             <div class="summary-box">
@@ -104,12 +139,12 @@
                 </div>
             </div>
 
-            <button class="btn-bayar" onclick="prosesBayar()">Selesaikan Pembayaran & Buat Struk</button>
-            <button class="btn-reset" onclick="resetKasir()">Reset / Pesanan Baru</button>
+            <button class="action-btn btn-bayar" onclick="prosesBayar()">Selesaikan Pembayaran & Buat Struk</button>
+            <button class="action-btn btn-reset" onclick="resetKasir()">Reset / Pesanan Baru</button>
         </div>
     </div>
 
-    <!-- Area Struk Cetak -->
+    <!-- Struk Pembayaran -->
     <div id="struk-area">
         <h3>WARUNG MAKANAN SEJATI</h3>
         <p>Jl. Raya Kasir No. 123</p>
@@ -123,31 +158,42 @@
         <div class="struk-row"><span>Kembali:</span><span id="strukKembali">Rp 0</span></div>
         <div class="struk-divider"></div>
         <p style="margin-top: 10px;">-- Terima Kasih --</p>
-        <button class="btn-cetak" onclick="window.print()">🖨️ Cetak Struk</button>
+        <button class="action-btn btn-cetak" onclick="window.print()">🖨️ Cetak Struk</button>
     </div>
 
     <script>
         let items = [];
         let total = 0;
 
-        function tambahPesanan() {
+        // Fungsi klik menu yang sudah ada
+        function pilihMenu(nama, harga) {
+            tambahKeDaftar(nama, harga, 1);
+        }
+
+        // Fungsi jika mengetik menu manual
+        function tambahManual() {
             const nama = document.getElementById('namaMenu').value;
             const harga = parseFloat(document.getElementById('hargaMenu').value);
             const qty = parseInt(document.getElementById('jumlahMenu').value);
 
             if (!nama || isNaN(harga) || isNaN(qty) || qty <= 0) {
-                alert('Silakan ketik nama menu, harga, dan jumlah yang valid!');
+                alert('Silakan isi nama menu, harga, dan jumlah yang valid!');
                 return;
             }
 
+            tambahKeDaftar(nama, harga, qty);
+            
+            document.getElementById('namaMenu').value = '';
+            document.getElementById('hargaMenu').value = '';
+            document.getElementById('jumlahMenu').value = '1';
+        }
+
+        function tambahKeDaftar(nama, harga, qty) {
             const subtotal = harga * qty;
             items.push({ nama, harga, qty, subtotal });
             total += subtotal;
 
             updateTabel();
-            document.getElementById('namaMenu').value = '';
-            document.getElementById('hargaMenu').value = '';
-            document.getElementById('jumlahMenu').value = '1';
             hitungKembalian();
         }
 
@@ -228,4 +274,4 @@
     </script>
 
 </body>
-</html>            
+</html>
