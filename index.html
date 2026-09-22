@@ -11,7 +11,6 @@
         .container { display: flex; gap: 20px; flex-wrap: wrap; }
         .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex: 1; min-width: 320px; }
         
-        /* Grid Tombol Menu */
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .btn-menu { background: #ffffff; border: 2px solid #28a745; color: #28a745; padding: 12px 8px; border-radius: 8px; cursor: pointer; text-align: center; font-weight: bold; transition: all 0.2s; }
         .btn-menu:hover { background: #28a745; color: white; transform: translateY(-2px); }
@@ -38,7 +37,6 @@
         .text-kembalian { color: #28a745; }
         .text-kurang { color: #dc3545; }
 
-        /* Struk Area */
         #struk-area { display: none; background: #fff; padding: 20px; border: 1px dashed #333; width: 300px; margin-top: 20px; font-family: 'Courier New', Courier, monospace; }
         #struk-area h3 { text-align: center; margin-bottom: 5px; }
         #struk-area p { text-align: center; margin: 3px 0; font-size: 13px; }
@@ -58,11 +56,8 @@
     <h1>🍔 Aplikasi Kasir Makanan</h1>
 
     <div class="container">
-        <!-- Pilihan Menu Siap Klik & Form Custom Input -->
         <div class="card">
             <h2>1. Pilih Menu Makanan</h2>
-            
-            <!-- Daftar Menu yang Tinggal Klik -->
             <label>Klik Menu Siap Pakai:</label>
             <div class="menu-grid">
                 <div class="btn-menu" onclick="pilihMenu('Nasi Goreng', 15000)">
@@ -96,7 +91,7 @@
             </div>
             <div class="form-group">
                 <label>Harga Satuan (Rp):</label>
-                <input type="number" id="hargaMenu" placeholder="Contoh: 15000">
+                <input type="text" id="hargaMenu" placeholder="Contoh: 15000 (tanpa titik)">
             </div>
             <div class="form-group">
                 <label>Jumlah (Qty):</label>
@@ -105,7 +100,6 @@
             <button class="action-btn" onclick="tambahManual()">+ Tambah ke Pesanan</button>
         </div>
 
-        <!-- Detail Pesanan & Pembayaran -->
         <div class="card">
             <h2>2. Detail Pesanan & Pembayaran</h2>
             <table>
@@ -129,7 +123,7 @@
 
             <div class="form-group" style="margin-top: 15px;">
                 <label>Nominal Uang Pembayaran (Rp):</label>
-                <input type="number" id="uangBayar" placeholder="Input uang pembeli..." oninput="hitungKembalian()">
+                <input type="text" id="uangBayar" placeholder="Contoh: 50000 (tanpa titik)" oninput="hitungKembalian()">
             </div>
 
             <div class="summary-box">
@@ -144,7 +138,6 @@
         </div>
     </div>
 
-    <!-- Struk Pembayaran -->
     <div id="struk-area">
         <h3>WARUNG MAKANAN SEJATI</h3>
         <p>Jl. Raya Kasir No. 123</p>
@@ -165,15 +158,14 @@
         let items = [];
         let total = 0;
 
-        // Fungsi klik menu yang sudah ada
         function pilihMenu(nama, harga) {
             tambahKeDaftar(nama, harga, 1);
         }
 
-        // Fungsi jika mengetik menu manual
         function tambahManual() {
             const nama = document.getElementById('namaMenu').value;
-            const harga = parseFloat(document.getElementById('hargaMenu').value);
+            let hargaRaw = document.getElementById('hargaMenu').value.replace(/\./g, '');
+            const harga = parseFloat(hargaRaw);
             const qty = parseInt(document.getElementById('jumlahMenu').value);
 
             if (!nama || isNaN(harga) || isNaN(qty) || qty <= 0) {
@@ -215,7 +207,8 @@
         }
 
         function hitungKembalian() {
-            const bayar = parseFloat(document.getElementById('uangBayar').value) || 0;
+            let bayarInput = document.getElementById('uangBayar').value.replace(/\./g, '');
+            const bayar = parseFloat(bayarInput) || 0;
             const kembalian = bayar - total;
             const elemKembalian = document.getElementById('uangKembalian');
             const labelKembalian = document.getElementById('labelKembalian');
@@ -230,7 +223,8 @@
         }
 
         function prosesBayar() {
-            const bayar = parseFloat(document.getElementById('uangBayar').value) || 0;
+            let bayarInput = document.getElementById('uangBayar').value.replace(/\./g, '');
+            const bayar = parseFloat(bayarInput) || 0;
 
             if (items.length === 0) {
                 alert('Belum ada pesanan!');
