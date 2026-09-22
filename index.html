@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kasir Makanan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .menu-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 150px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aplikasi Kasir Makanan</h1>
+    
+    <h3>Daftar Menu:</h3>
+    <div class="menu-container">
+        <div class="menu-item">
+            <h3>Nasi Goreng</h3>
+            <p>Rp 15.000</p>
+            <button onclick="alert('Nasi Goreng ditambahkan!')">Tambah ke Kasir</button>
+        </div>
+        <div class="menu-item">
+            <h3>Es Teh Manis</h3>
+            <p>Rp 5.000</p>
+            <button onclick="alert('Es Teh ditambahkan!')">Tambah ke Kasir</button>
+        </div>
+    </div>
+</body>
+</html>
